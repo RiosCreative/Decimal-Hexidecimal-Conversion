@@ -1,0 +1,46 @@
+// Luis Rios
+// 3/14/2016
+// Decimal Hexidecimal Conversion
+
+import java.io.*;
+import java.util.Scanner;
+
+/* For numbers less than 256, each will have a 2 digit hex value from 00 to FF.
+ * Therefore, we can convert the decimal to a hex value by dividing it by 16 to 
+ * get the first digit and taking the remainder to get the second. 
+ */
+public class decHexConverter {
+
+  /* Constructor */
+  public String decHexConverter(int decimalValue){
+    String hexValue = convertvalue(decimalValue);
+    return hexValue;
+  }
+  
+  private String convertValue(int value) {
+    int tensPlaceNumber = value / 16;
+    int onesPlaceNumber = value % 16;
+    String hexString = tensPlaceNumber + "" + onesPlaceNumber;
+    return hexString;
+  }
+
+  private static void main((String[] args){
+    /* Scanner to take user input*/
+    Scanner input = new Scanner(System.in);  
+    
+    int finishProgram = 0;
+    while (finishProgram == 0) {
+      /*Prompt user to give an integer from 0-255 */
+      System.out.println("Enter an integer from 0 to 255 to convert to hexidecimal: ");
+      int userValue = input.nextInt();
+      
+      String hexValue = decHexConverter(userValue);
+      
+      System.out.println("The hexidecimal value for %s is %s", userValue, hexValue);
+      
+      System.out.println("/n Convert a new value? Input 0 to continue");
+      finishProgram - input.nextInt();
+    }
+  }
+  
+}
