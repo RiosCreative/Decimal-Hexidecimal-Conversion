@@ -1,46 +1,94 @@
 // Luis Rios
 // 3/14/2016
-// Decimal Hexidecimal Conversion
+// Decimal Hexadecimal Conversion
 
-import java.io.*;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 /* For numbers less than 256, each will have a 2 digit hex value from 00 to FF.
- * Therefore, we can convert the decimal to a hex value by dividing it by 16 to 
- * get the first digit and taking the remainder to get the second. 
+ * Therefore, we can convert the decimal to a hex value by dividing it by 16 to
+ * get the first digit and taking the remainder to get the second.
  */
 public class decHexConverter {
 
-  /* Constructor */
-  public String decHexConverter(int decimalValue){
-    String hexValue = convertvalue(decimalValue);
+  public static String decHexConverter(int decimalValue){
+    String hexValue = convertValue(decimalValue);
     return hexValue;
   }
-  
-  private String convertValue(int value) {
+
+  private static String convertValue(int value) {
     int tensPlaceNumber = value / 16;
     int onesPlaceNumber = value % 16;
-    String hexString = tensPlaceNumber + "" + onesPlaceNumber;
+
+    // Convert number value to letter value if > 10
+    String tensString = numLetterConversion(tensPlaceNumber);
+    String onesString = numLetterConversion(onesPlaceNumber);
+
+    String hexString = tensString + onesString;
     return hexString;
   }
 
-  private static void main((String[] args){
-    /* Scanner to take user input*/
-    Scanner input = new Scanner(System.in);  
-    
-    int finishProgram = 0;
-    while (finishProgram == 0) {
-      /*Prompt user to give an integer from 0-255 */
-      System.out.println("Enter an integer from 0 to 255 to convert to hexidecimal: ");
-      int userValue = input.nextInt();
-      
-      String hexValue = decHexConverter(userValue);
-      
-      System.out.println("The hexidecimal value for %s is %s", userValue, hexValue);
-      
-      System.out.println("/n Convert a new value? Input 0 to continue");
-      finishProgram - input.nextInt();
+/* Convert tens and ones place values to letters as necessary.
+ */
+  private static String numLetterConversion(int value) {
+    String letterValue = new String();
+    if (value < 10) {
+      return Integer.toString(value);
     }
+    else if (value == 10) {
+      letterValue = "A";
+    }
+    else if (value == 11) {
+      letterValue = "B";
+    }
+    else if (value == 12) {
+      letterValue = "C";
+    }
+    else if (value == 13) {
+      letterValue = "D";
+    }
+    else if (value == 14) {
+      letterValue = "E";
+    }
+    else if (value == 15) {
+      letterValue = "F";
+    }
+
+    return letterValue;
   }
-  
+
+  public static void main(String[] args){
+    Scanner scanner = new Scanner(System.in);
+    int finishProgram = 0;
+    int userIntValue; 
+    do {
+      
+      System.out.println("Enter an integer value from 0-255: ");
+      try{
+        userIntValue = scanner.nextInt();
+        // If value is out of bounds, say so and start again
+        if (userIntValue > 255 || userIntValue < 0){
+          System.out.println("This integer is out of range.");
+        }
+        else {
+          String hexValue = decHexConverter(userIntValue);
+          System.out.println("The hexadecimal value for " + userIntValue + " is " + hexValue + ".");
+          
+        }
+        
+        System.out.println("Convert a new value? Input 0 to continue  ");
+        int userContinue = scanner.nextInt();
+        if(userContinue == 0) {
+          finishProgram = 0;
+        }
+        else {
+          System.exit(0);
+        }
+      }
+      catch(InputMismatchException e) {
+          System.out.println("You entered bad data... Try again.");
+      }
+    } while (finishProgram == 0);
+  }
+
 }

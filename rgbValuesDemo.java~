@@ -1,0 +1,13 @@
+// Luis Rios
+// 3/21/2016
+// Decimal Hexadecimal Conversion
+
+import java.io.*;
+
+public class rgbValuesDemo {
+  public void main(String args[]){
+    Console console = System.console();
+    console.printf("Hello my baby, hello my honey...");
+  }
+
+}

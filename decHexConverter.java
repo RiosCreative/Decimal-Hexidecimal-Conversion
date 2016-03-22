@@ -2,8 +2,8 @@
 // 3/14/2016
 // Decimal Hexadecimal Conversion
 
-import java.io.*;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 /* For numbers less than 256, each will have a 2 digit hex value from 00 to FF.
  * Therefore, we can convert the decimal to a hex value by dividing it by 16 to
@@ -58,30 +58,38 @@ public class decHexConverter {
   }
 
   public static void main(String[] args){
-    /* Scanner to take user input*/
-    Scanner input = new Scanner(System.in);
-
+    Scanner scanner = new Scanner(System.in);
     int finishProgram = 0;
-    while (finishProgram == 0) {
-      /*Prompt user to give an integer from 0-255 */
-      System.out.println("Enter an integer from 0 to 255 to convert to hexadecimal: ");
-      int userValue = input.nextInt();
-
-      String hexValue = decHexConverter(userValue);
-
-      System.out.println("The hexadecimal value for " + userValue + " is "+ hexValue + ".");
+    int userIntValue; 
+    do {
       
-      System.out.println("/n Convert a new value? Input 0 to continue");
-      int userContinue = input.nextInt();
-
-      if(userContinue == 0) {
-        finishProgram = 0;
+      System.out.println("Enter an integer value from 0-255: ");
+      try{
+        userIntValue = scanner.nextInt();
+        // If value is out of bounds, say so and start again
+        if (userIntValue > 255 || userIntValue < 0){
+          System.out.println("This integer is out of range.");
+        }
+        else {
+          String hexValue = decHexConverter(userIntValue);
+          System.out.println("The hexadecimal value for " + userIntValue + " is " + hexValue + ".");
+          
+        }
+        
+        System.out.println("Convert a new value? Input 0 to continue  ");
+        int userContinue = scanner.nextInt();
+        if(userContinue == 0) {
+          finishProgram = 0;
+        }
+        else {
+          System.exit(0);
+        }
       }
-      else {
-        System.exit(0);
+      catch(InputMismatchException e) {
+          System.out.println("You entered bad data... Try again.");
+          scanner.next();
       }
-
-    }
+    } while (finishProgram == 0);
   }
 
 }
